@@ -10,6 +10,8 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
-    "mysql2": "^3.12.0"
+    "index.js": "^0.0.3",
+    "mysql2": "^3.12.0",
+    "node": "^22.13.0"
   }
 }

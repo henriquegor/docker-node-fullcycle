@@ -6,6 +6,8 @@ COPY . .
 
 RUN npm install
 
+WORKDIR /usr/src/app/src
+
 EXPOSE 3000
 
 ENV DOCKERIZE_VERSION=v0.9.1
