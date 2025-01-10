@@ -1,0 +1,40 @@
+services:
+
+  app:
+    image: henriquegor/node-app:prod
+    container_name: app
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh
+    command: node index.js
+    networks:
+      - node-network
+    tty: true
+    depends_on:
+      - db
+    
+
+  db:
+    image: henriquegor/mysql-node:prod
+    command: --innodb-use-native-aio=0
+    container_name: db
+    restart: always
+    tty: true
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - node-network
+
+  nginx:
+    image: henriquegor/nginx-node:prod
+    container_name: nginx
+    networks: 
+      - node-network
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+
+networks:
+  node-network:
+    driver: bridge
+
