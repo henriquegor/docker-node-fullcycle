@@ -3,14 +3,17 @@ Contexto : Criar uma app Nodejs que mostre "Full Cycle Rocks" e os nomes cadastr
 
 # Docker Hub Links
 [Node](https://hub.docker.com/repository/docker/henriquegor/node-app/general)
+
 [Mysql](https://hub.docker.com/repository/docker/henriquegor/mysql-node/general)
+
 [Nginx](https://hub.docker.com/repository/docker/henriquegor/nginx-node/general)
 
-# Como foi resolvido?
-Principais maneiras utilizadas para diminuir o tamanho da imagem foram:
-
-1- Utilizar a imagem scratch que é a imagem vazia do Docker Hub
-
-2- Realizar o build do arquivo para gerar o arquivo binário assim não havendo necessidade de termo o Golang instalado na imagem
-
-3- No momento de realizar o build no golang utilizar as flags -ldflags="-s -w" para diminuir o tamanho do arquivo
+# O que foi feito?
+## Mysql:
+Foi criado a imagem do banco de dados utilizando o arquivo init.sql copiando o para a pasta /docker-entrypoint-initdb.d/ assim realizando a inicialização do banco com as tabelas necessárias.
+## Node
+Foi criado o app que deleta todas as informações da tabela primeiro para depois criar apenas alguns nomes e exibir isso na tela. Na imagem foi colocado o npm i para que instale todas as dependencias antes de iniciar o projeto
+## Nginx
+Foi criado o arquivo de conf onde no proxypass é passado o app com a porta que ele irá ficar exposto para que o nginx conseguia conectar nele
+## Docker Compose
+Com o docker compose foi possível subir as 3 imagens com a dependencia entre elas assim o node aguarda o banco de dados subir para que ele execute os comandos dentro do banco de dados e inicie.
